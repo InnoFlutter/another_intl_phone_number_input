@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-
 /// More information
 /// https://medium.com/gskinner-team/flutter-widgetview-a-simple-separation-of-layout-and-logic-f0be5a537b87
 abstract class WidgetView<T extends StatefulWidget, S extends State<T>>

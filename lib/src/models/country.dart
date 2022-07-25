@@ -1,5 +1,6 @@
 import 'package:flutter/rendering.dart';
 
+/// Taken from inl_phone_number_input with some modification
 class Country {
   /// The name of the [Country]
   final String? name;

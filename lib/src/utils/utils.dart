@@ -1,5 +1,7 @@
 import 'package:another_intl_phone_number_input/src/models/country.dart';
 
+/// Taken from inl_phone_number_input with some modification
+
 /// [Utils] class contains utility methods for `intl_phone_number_input` library
 class Utils {
   ///  Returns a [Country] form list of [countries] passed that matches [countryCode].

@@ -4,6 +4,9 @@ import 'package:another_intl_phone_number_input/src/utils/phone_number_util.dart
 
 typedef OnInputFormatted<T> = void Function(T value);
 
+
+/// Taken from inl_phone_number_input with some modification
+
 /// [PhoneFormatter] is a custom formatter that extends [TextInputFormatter]
 /// which provides as you type validation and formatting for phone number inputted.
 class PhoneFormatter extends TextInputFormatter {

@@ -24,8 +24,13 @@ class AnotherInternationalPhoneNumberInput extends StatefulWidget {
   final bool formatInput;
   final int maxLength;
   final bool? useLocaleToSetCountry;
+  final String? inititalCountry;
 
   final List<String>? countries;
+
+  /// Styles
+  final InputDecoration? inputDecoration;
+  final TextStyle? textStyle;
 
   AnotherInternationalPhoneNumberInput(
       {Key? key,
@@ -37,6 +42,9 @@ class AnotherInternationalPhoneNumberInput extends StatefulWidget {
       this.countries,
       this.maxLength = 15,
       this.useLocaleToSetCountry = false,
+      this.inititalCountry = 'GB',
+      this.inputDecoration,
+      this.textStyle,
       this.initialValue})
       : super(key: key);
 
@@ -61,7 +69,7 @@ class _InputWidgetState extends State<AnotherInternationalPhoneNumberInput> {
     setup();
     initCountries();
     Future.delayed(Duration.zero, () {
-      if (widget.useLocaleToSetCountry ?? false){
+      if (widget.useLocaleToSetCountry ?? false) {
         initCountryByLocale();
       }
     });
@@ -120,11 +128,16 @@ class _InputWidgetState extends State<AnotherInternationalPhoneNumberInput> {
       List<Country> countries =
           CountryProvider.getCountriesData(countries: widget.countries);
 
+      Country? initialCountry = this
+          .countries
+          .firstWhereOrNull((el) => el.alpha2Code == widget.inititalCountry);
+
       Country country = previouslySelectedCountry ??
-          Utils.getInitialSelectedCountry(
-            countries,
-            widget.initialValue?.isoCode ?? '',
-          );
+          (initialCountry ??
+              Utils.getInitialSelectedCountry(
+                countries,
+                widget.initialValue?.isoCode ?? '',
+              ));
 
       // Remove potential duplicates
       countries = countries.toSet().toList();
@@ -145,7 +158,7 @@ class _InputWidgetState extends State<AnotherInternationalPhoneNumberInput> {
   void initCountryByLocale() {
     Locale myLocale = Localizations.localeOf(context);
     Country? localeCountry = this.countries.firstWhereOrNull(
-            (el) => el.alpha2Code == myLocale.countryCode.toString());
+        (el) => el.alpha2Code == myLocale.countryCode.toString());
     if (localeCountry != null) {
       setState(() {
         this.country = localeCountry;
@@ -296,6 +309,8 @@ class _InputWidgetView extends WidgetView<AnotherInternationalPhoneNumberInput,
               key: Key('country_code'),
               keyboardType: widget.keyboardType,
               controller: state.dialCodeController,
+              decoration: widget.inputDecoration,
+              style: widget.textStyle,
               onChanged: state.onDialCodeChanged,
               inputFormatters: [
                 LengthLimitingTextInputFormatter(5),
@@ -312,6 +327,8 @@ class _InputWidgetView extends WidgetView<AnotherInternationalPhoneNumberInput,
             onChanged: state.onChanged,
             onSaved: state.onSaved,
             controller: state.controller,
+            decoration: widget.inputDecoration,
+            style: widget.textStyle,
             inputFormatters: [
               LengthLimitingTextInputFormatter(widget.maxLength),
               widget.formatInput
@@ -319,6 +336,7 @@ class _InputWidgetView extends WidgetView<AnotherInternationalPhoneNumberInput,
                       isoCode: countryCode,
                       dialCode: dialCode,
                       onInputFormatted: (TextEditingValue value) {
+                        print('FORMATTED ' + value.text.toString());
                         state.controller!.value = value;
                       },
                     )

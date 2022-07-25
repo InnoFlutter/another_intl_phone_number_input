@@ -1,6 +1,8 @@
 import 'package:another_intl_phone_number_input/src/utils/phone_number.dart';
 import 'package:libphonenumber_plugin/libphonenumber_plugin.dart' as p;
 
+/// Taken from inl_phone_number_input with some modification
+
 /// A wrapper class [PhoneNumberUtil] that basically switch between plugin available for `Web` or `Android or IOS` and `Other platforms` when available.
 class PhoneNumberUtil {
   /// Accepts [phoneNumber] and [isoCode]
